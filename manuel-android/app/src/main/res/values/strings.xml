@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Manuel Demo</string>
+
+    <string name="activity_main_title">Manuel Demo</string>
 </resources>
