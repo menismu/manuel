@@ -2,4 +2,6 @@
 
     package="com.decody.manuel.android">
 
+    <application />
+
 </manifest>

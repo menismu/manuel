@@ -5,4 +5,9 @@
     android:background="@color/colorBlack"
     android:orientation="vertical">
 
+    <com.decody.manuel.android.ui.TwoLevelMenuView
+        android:id="@+id/two_level_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
 </RelativeLayout>

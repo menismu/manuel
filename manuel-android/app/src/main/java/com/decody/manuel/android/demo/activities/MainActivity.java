@@ -1,4 +1,4 @@
-package com.decody.manuel.android.activities;
+package com.decody.manuel.android.demo.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.decody.manuel.android.R;
+import com.decody.manuel.android.demo.R;
 
 public class MainActivity extends Activity implements View.OnClickListener {
 
@@ -19,7 +19,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
 
         setContentView(R.layout.activity_main);
 
-        mListView = (ViewGroup) findViewById(R.id.list);
+        mListView = findViewById(R.id.list);
 
         addDemo("Menu and Submenu", MenuAndSubmenuActivity.class);
     }
