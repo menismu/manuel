@@ -2,4 +2,7 @@
     <string name="app_name">Manuel Demo</string>
 
     <string name="activity_main_title">Manuel Demo</string>
+
+    <string name="top_menu_text">Top menu</string>
+    <string name="bottom_menu_text">Bottom menu</string>
 </resources>
