@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TwoLevelMenuView">
+        <attr name="topMenu" format="reference" />
+        <attr name="bottomMenu" format="reference" />
+    </declare-styleable>
+</resources>
