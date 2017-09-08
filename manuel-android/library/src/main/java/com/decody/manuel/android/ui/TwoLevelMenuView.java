@@ -17,8 +17,6 @@ public class TwoLevelMenuView extends RelativeLayout {
 
     private int mBottomMenuId;
 
-    private LayoutParams mLayoutParams;
-
     public TwoLevelMenuView(Context context) {
         super(context);
     }
@@ -42,16 +40,6 @@ public class TwoLevelMenuView extends RelativeLayout {
         initialize(context, attrs);
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        addView(inflater.inflate(mTopMenuId, null), mLayoutParams);
-        addView(inflater.inflate(mBottomMenuId, null), mLayoutParams);
-    }
-
     private void initialize(Context context, AttributeSet attrs) {
         // retrieve the references of both top and bottom menus
         TypedArray a = context.getTheme().obtainStyledAttributes(
@@ -67,9 +55,14 @@ public class TwoLevelMenuView extends RelativeLayout {
         }
 
         // set up common layout params
-        mLayoutParams = new RelativeLayout.LayoutParams(
+        LayoutParams params = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        mLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
-        mLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
+        params.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
+        params.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
+
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        addView(inflater.inflate(mTopMenuId, null), params);
+        addView(inflater.inflate(mBottomMenuId, null), params);
     }
 }
