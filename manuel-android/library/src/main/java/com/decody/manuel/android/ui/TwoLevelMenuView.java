@@ -16,9 +16,9 @@ import com.decody.manuel.android.R;
 
 public class TwoLevelMenuView extends RelativeLayout {
 
-    private int mTopMenuId;
+    private View mTopView;
 
-    private int mBottomMenuId;
+    private View mBottomView;
 
     public TwoLevelMenuView(Context context) {
         super(context);
@@ -50,9 +50,12 @@ public class TwoLevelMenuView extends RelativeLayout {
                 R.styleable.TwoLevelMenuView,
                 0, 0);
 
+        int topMenuId;
+        int bottomMenuId;
+
         try {
-            mTopMenuId = a.getResourceId(R.styleable.TwoLevelMenuView_topMenu, 0);
-            mBottomMenuId = a.getResourceId(R.styleable.TwoLevelMenuView_bottomMenu, 0);
+            topMenuId = a.getResourceId(R.styleable.TwoLevelMenuView_topMenu, 0);
+            bottomMenuId = a.getResourceId(R.styleable.TwoLevelMenuView_bottomMenu, 0);
         } finally {
             a.recycle();
         }
@@ -65,8 +68,11 @@ public class TwoLevelMenuView extends RelativeLayout {
 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        addView(inflater.inflate(mTopMenuId, null), params);
-        addView(inflater.inflate(mBottomMenuId, null), params);
+        mTopView = inflater.inflate(topMenuId, null);
+        mBottomView = inflater.inflate(bottomMenuId, null);
+
+        addView(mTopView, params);
+        addView(mBottomView, params);
 
         setOnTouchListener(new CustomOnTouchListener(getContext()));
     }
