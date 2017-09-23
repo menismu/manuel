@@ -5,7 +5,10 @@ import android.content.res.TypedArray;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
@@ -64,5 +67,55 @@ public class TwoLevelMenuView extends RelativeLayout {
 
         addView(inflater.inflate(mTopMenuId, null), params);
         addView(inflater.inflate(mBottomMenuId, null), params);
+
+        setOnTouchListener(new CustomOnTouchListener(getContext()));
+    }
+
+    private class CustomOnTouchListener implements View.OnTouchListener {
+
+        private GestureDetector mGestureDetector;
+
+        CustomOnTouchListener(Context context) {
+            mGestureDetector = new GestureDetector(context, new CustomGestureListener());
+        }
+
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+
+            return mGestureDetector.onTouchEvent(motionEvent);
+        }
+    }
+
+    private class CustomGestureListener implements GestureDetector.OnGestureListener {
+
+        @Override
+        public boolean onDown(MotionEvent motionEvent) {
+            return false;
+        }
+
+        @Override
+        public void onShowPress(MotionEvent motionEvent) {
+
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent motionEvent) {
+            return false;
+        }
+
+        @Override
+        public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+            return false;
+        }
+
+        @Override
+        public void onLongPress(MotionEvent motionEvent) {
+
+        }
+
+        @Override
+        public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
+            return false;
+        }
     }
 }
