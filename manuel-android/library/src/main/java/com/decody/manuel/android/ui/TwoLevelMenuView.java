@@ -43,6 +43,14 @@ public class TwoLevelMenuView extends RelativeLayout {
         initialize(context, attrs);
     }
 
+//    @Override
+//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+//        int width = MeasureSpec.getSize(widthMeasureSpec);
+//        int height = MeasureSpec.getSize(heightMeasureSpec);
+//
+//        setMeasuredDimension(width, height);
+//    }
+
     private void initialize(Context context, AttributeSet attrs) {
         // retrieve the references of both top and bottom menus
         TypedArray a = context.getTheme().obtainStyledAttributes(
@@ -64,15 +72,16 @@ public class TwoLevelMenuView extends RelativeLayout {
         LayoutParams params = new RelativeLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         params.addRule(RelativeLayout.ALIGN_PARENT_LEFT, RelativeLayout.TRUE);
-        params.addRule(RelativeLayout.ALIGN_PARENT_TOP, RelativeLayout.TRUE);
+        params.addRule(RelativeLayout.ALIGN_PARENT_START, RelativeLayout.TRUE);
+        params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         mTopView = inflater.inflate(topMenuId, null);
         mBottomView = inflater.inflate(bottomMenuId, null);
 
-        addView(mTopView, params);
         addView(mBottomView, params);
+        addView(mTopView, params);
 
         setOnTouchListener(new CustomOnTouchListener(getContext()));
     }
@@ -94,9 +103,14 @@ public class TwoLevelMenuView extends RelativeLayout {
 
     private class CustomGestureListener implements GestureDetector.OnGestureListener {
 
+        /**
+         * It is the minimum distance to consider the gesture a vertical scroll.
+         */
+        private static final int GESTURE_MINIMUM_Y_DISTANCE = 5;
+
         @Override
         public boolean onDown(MotionEvent motionEvent) {
-            return false;
+            return true;
         }
 
         @Override
@@ -110,8 +124,16 @@ public class TwoLevelMenuView extends RelativeLayout {
         }
 
         @Override
-        public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
-            return false;
+        public boolean onScroll(MotionEvent motionEvent, MotionEvent motionEvent1, float distanceX, float distanceY) {
+
+            if ((distanceY < GESTURE_MINIMUM_Y_DISTANCE && distanceY > -GESTURE_MINIMUM_Y_DISTANCE)) {
+
+                return false;
+            }
+
+            updateViews(distanceY);
+
+            return true;
         }
 
         @Override
@@ -122,6 +144,24 @@ public class TwoLevelMenuView extends RelativeLayout {
         @Override
         public boolean onFling(MotionEvent motionEvent, MotionEvent motionEvent1, float v, float v1) {
             return false;
+        }
+
+        private void updateViews(float distanceY) {
+            float newTopY = mTopView.getY() - distanceY;
+
+            // update top view location (vertically)
+            if (newTopY < mBottomView.getY() - mBottomView.getHeight()) {
+                newTopY = mBottomView.getY() - mBottomView.getHeight();
+            } else if (newTopY > mBottomView.getY()) {
+                newTopY = mBottomView.getY();
+            }
+
+            mTopView.setY(newTopY);
+
+            // update alpha bottom view
+            float alpha = (mBottomView.getY() - mTopView.getY()) / mBottomView.getHeight();
+
+            mBottomView.setAlpha(alpha);
         }
     }
 }
