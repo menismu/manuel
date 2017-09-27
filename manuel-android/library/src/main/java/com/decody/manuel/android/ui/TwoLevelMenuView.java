@@ -43,14 +43,6 @@ public class TwoLevelMenuView extends RelativeLayout {
         initialize(context, attrs);
     }
 
-//    @Override
-//    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-//        int width = MeasureSpec.getSize(widthMeasureSpec);
-//        int height = MeasureSpec.getSize(heightMeasureSpec);
-//
-//        setMeasuredDimension(width, height);
-//    }
-
     private void initialize(Context context, AttributeSet attrs) {
         // retrieve the references of both top and bottom menus
         TypedArray a = context.getTheme().obtainStyledAttributes(
